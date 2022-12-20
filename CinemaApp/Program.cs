@@ -3,4 +3,7 @@
 using CinemaApp.Models.BaseEntity;
 Film film = new();
 Cinema Cinema = new();
-Cinema.AddFilm(film);
+foreach (var item in Cinema.Places)
+{
+    Console.WriteLine(item);
+}

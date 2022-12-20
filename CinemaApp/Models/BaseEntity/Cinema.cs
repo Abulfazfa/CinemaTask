@@ -10,19 +10,47 @@ namespace CinemaApp.Models.BaseEntity
 {
     internal class Cinema : ICinema
     {
+        public static int CinemaCounter { get; set; }
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Address { get; set; }
-        public Cinema[,] Places;
+        public int[,] Places;
+        List<Cinema> Cinemas;
         List<Film> Films { get; set; }
         public Cinema()
         {
-            Places = new Cinema[10,5];
+            CinemaCounter++;
+            Id = CinemaCounter;
+            Places = new int[10, 5];
             Films = new();
+            Cinemas = new();
         }
 
         public void AddFilm()
         {
+            Cinema cinema1 = new()
+            {
+                Name = "28 May Cinema",
+
+                Address = "28 May"
+            };
+            Cinema cinema2 = new()
+            {
+                Name = "Ganclik Cinema",
+
+                Address = "Ganclic Mall"
+            };
+            Cinema cinema3 = new()
+            {
+                Name = "Park Bulvar Cinema",
+
+                Address = "Park Bulvar"
+            };
+            Cinemas.Add(cinema1);
+            Cinemas.Add(cinema2);
+            Cinemas.Add(cinema3);
+          
+
             Film film1 = new()
             {
                 Name = "Action Film 1",
@@ -83,27 +111,72 @@ namespace CinemaApp.Models.BaseEntity
 
         public void FindByAddress(string address)
         {
-           
+            switch (address)
+            {
+                case "28 May":
+                    List<Cinema> cinema1 = Cinemas.FindAll(f => f.Address == "28 May");
+                    break;
+                case "Ganclic Mall":
+                    List<Cinema> cinema2 = Cinemas.FindAll(f => f.Address == "Ganclic Mall");
+                    break;
+                case "Park Bulvar":
+                    List<Cinema> cinema3 = Cinemas.FindAll(f => f.Address == "Park Bulvar");
+                    break;
+                
+            }
         }
 
-        public void BookFilm(string name)
+        public void BookFilm(string name, int column, int row)
         {
-           
+            foreach (var film in Films)
+            {
+                if (film.Name == name && film.Count > 0)
+                {
+                    film.Count--;
+                    Places[column, row] = 1;
+                    Console.WriteLine($"You book successfully ticket for {film.Name}");
+                }
+            }
         }
 
         public void ShowEmptyPlace(string name)
         {
-            throw new NotImplementedException();
+            Cinema cinema = Cinemas.Find(c => c.Name == name);
+            int count = 0;
+            foreach (var item in cinema.Places)
+            {
+                if (item == 0)
+                {
+                    count++;
+                }
+            }
+            Console.WriteLine(count);
         }
 
         public void ShowAllFilms()
         {
-
+            foreach (var film in Films)
+            {
+                Console.WriteLine(film.Name + " " + film.Catagory);
+            }
+        }
+        public void ShowAllFilmInCertainCinema(string name)
+        {
+            foreach (var cinema in Cinemas)
+            {
+                if (name == cinema.Name)
+                {
+                    foreach (var film in Films)
+                    {
+                        Console.WriteLine(film.Name + " " + film.Catagory);
+                    }
+                }
+            }
         }
 
         public void RemoveFilm(Film film)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

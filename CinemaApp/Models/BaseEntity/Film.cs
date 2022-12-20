@@ -9,14 +9,15 @@ namespace CinemaApp.Models.BaseEntity
     internal class Film
     {
         public int Id { get; set; }
-        public static int FilmCount { get; set; }
+        public static int FilmCounter { get; set; }
         public string? Name { get; set; }
         public int Catagory { get; set; }
         public int Price { get; set; }
+        public int Count { get; set; }
         public Film()
         {
-            FilmCount++;
-            Id = FilmCount;
+            FilmCounter++;
+            Id = FilmCounter;
         }
     }
 }

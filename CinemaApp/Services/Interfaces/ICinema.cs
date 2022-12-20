@@ -12,9 +12,10 @@ namespace CinemaApp.Services.Interfaces
         void AddFilm();
         void FindByCatagory(int number);
         void FindByAddress(string address);
-        void BookFilm(string name);
+        void BookFilm(string name, int column, int row);
         void ShowEmptyPlace(string name);
         void ShowAllFilms();
+        void ShowAllFilmInCertainCinema(string name);
         void RemoveFilm(Film film);
 
     }
